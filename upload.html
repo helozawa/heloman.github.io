@@ -6,99 +6,54 @@
     <title>Đăng Truyện Mới</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-       <style>
         :root {
-            --neon-pink: #ff00ff;
-            --neon-blue: #00ffff;
-            --neon-green: #39ff14;
-            --neon-purple: #b026ff;
-            --dark-bg: #0a0a0a;
-            --darker-bg: #050505;
-            --light-text: #ffffff;
-            --glow: 0 0 10px, 0 0 20px;
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #ef233c;
+            --gray: #6c757d;
+            --soft-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hard-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
         }
         
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
         }
         
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
         body {
-            background: radial-gradient(circle at center, #18072c, var(--dark-bg));
-            color: var(--light-text);
+            background-color: #f5f7ff;
+            color: var(--dark);
             min-height: 100vh;
             padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-        
-        /* Neon lines animation */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--neon-pink), transparent);
-            box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
-            animation: scanLine 4s linear infinite;
-            z-index: 1;
-        }
-        
-        @keyframes scanLine {
-            0% { top: -10px; }
-            100% { top: 100%; }
         }
         
         .upload-container {
             width: 100%;
             max-width: 900px;
-            background: rgba(10, 10, 10, 0.8);
+            background: white;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            box-shadow: var(--hard-shadow);
             overflow: hidden;
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 2;
-            backdrop-filter: blur(5px);
-        }
-        
-        .upload-container::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, 
-                var(--neon-blue), 
-                var(--neon-pink), 
-                var(--neon-green),
-                var(--neon-purple));
-            z-index: -1;
-            border-radius: 17px;
-            animation: borderGlow 3s linear infinite;
-        }
-        
-        @keyframes borderGlow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
         }
         
         header {
-            background: rgba(0, 0, 0, 0.7);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             padding: 25px 30px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
+            color: white;
         }
         
         header h1 {
@@ -108,16 +63,12 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            color: var(--neon-pink);
-            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
             font-weight: 700;
-            letter-spacing: 1px;
         }
         
         header p {
-            color: var(--neon-blue);
-            text-shadow: 0 0 5px var(--neon-blue);
             font-size: 18px;
+            opacity: 0.9;
         }
         
         .main-content {
@@ -133,8 +84,8 @@
         .preview-section {
             flex: 1;
             padding: 30px;
-            background: rgba(15, 15, 15, 0.6);
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            background: #f8f9fa;
+            border-left: 1px solid #e9ecef;
             display: flex;
             flex-direction: column;
         }
@@ -147,101 +98,94 @@
             display: block;
             margin-bottom: 10px;
             font-weight: 600;
-            font-size: 18px;
-            color: var(--neon-green);
-            text-shadow: 0 0 5px var(--neon-green);
+            font-size: 16px;
+            color: var(--dark);
         }
         
         .form-group input, 
         .form-group textarea, 
         .form-group select {
             width: 100%;
-            padding: 14px 18px;
-            background: rgba(20, 20, 20, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            background: white;
+            border: 1px solid #ced4da;
             border-radius: 8px;
             font-size: 16px;
             transition: all 0.3s;
-            color: white;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            color: var(--dark);
         }
         
         .form-group input:focus, 
         .form-group textarea:focus, 
         .form-group select:focus {
-            border-color: var(--neon-purple);
+            border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 10px var(--neon-purple);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
         }
         
         .checkbox-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
             margin-top: 10px;
         }
         
         .checkbox-item {
-            background: rgba(30, 30, 30, 0.7);
-            border: 2px solid var(--neon-blue);
-            border-radius: 30px;
-            padding: 10px 20px;
+            background: white;
+            border: 1px solid #ced4da;
+            border-radius: 20px;
+            padding: 8px 15px;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #ccc;
-            box-shadow: 0 0 5px var(--neon-blue);
+            color: var(--gray);
+            font-size: 14px;
         }
         
         .checkbox-item:hover {
-            border-color: var(--neon-pink);
-            box-shadow: 0 0 10px var(--neon-pink);
-            color: white;
+            border-color: var(--primary);
+            color: var(--primary);
         }
         
         .checkbox-item.selected {
-            background: var(--neon-purple);
-            border-color: var(--neon-pink);
+            background: var(--primary);
+            border-color: var(--primary);
             color: white;
-            box-shadow: 0 0 15px var(--neon-pink);
         }
         
         .upload-area {
-            border: 2px dashed var(--neon-blue);
+            border: 2px dashed #adb5bd;
             border-radius: 10px;
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             margin-bottom: 15px;
-            background: rgba(20, 20, 20, 0.5);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            background: #f8f9fa;
         }
         
         .upload-area:hover {
-            border-color: var(--neon-pink);
-            box-shadow: 0 0 15px var(--neon-pink);
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
         }
         
         .upload-area i {
-            font-size: 50px;
-            color: var(--neon-blue);
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px var(--neon-blue);
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 10px;
         }
         
         .upload-area p {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: var(--light-text);
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--dark);
         }
         
         .upload-area span {
-            color: var(--neon-green);
-            font-size: 14px;
-            text-shadow: 0 0 5px var(--neon-green);
+            color: var(--gray);
+            font-size: 13px;
         }
         
         .file-input {
@@ -256,20 +200,19 @@
         }
         
         .preview-box {
-            background: rgba(20, 20, 20, 0.6);
+            background: white;
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--soft-shadow);
+            border: 1px solid #e9ecef;
         }
         
         .preview-box h3 {
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 1px solid var(--neon-blue);
-            color: var(--neon-blue);
-            text-shadow: 0 0 5px var(--neon-blue);
-            font-size: 20px;
+            border-bottom: 1px solid #e9ecef;
+            color: var(--primary);
+            font-size: 18px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -282,8 +225,7 @@
             border-radius: 8px;
             display: none;
             margin-top: 15px;
-            border: 2px solid var(--neon-pink);
-            box-shadow: 0 0 10px var(--neon-pink);
+            border: 1px solid #e9ecef;
         }
         
         .content-preview {
@@ -301,14 +243,14 @@
             height: 120px;
             border-radius: 5px;
             overflow: hidden;
-            box-shadow: 0 0 5px var(--neon-blue);
+            box-shadow: var(--soft-shadow);
             position: relative;
             transition: all 0.3s;
         }
         
         .preview-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px var(--neon-pink);
+            transform: translateY(-3px);
+            box-shadow: var(--hard-shadow);
         }
         
         .preview-item img {
@@ -321,155 +263,111 @@
             position: absolute;
             top: 5px;
             right: 5px;
-            background: rgba(255, 0, 0, 0.7);
+            background: var(--danger);
             color: white;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 12px;
-            box-shadow: 0 0 5px red;
+            font-size: 10px;
         }
         
         .submit-section {
-            padding: 25px 30px;
-            background: rgba(0, 0, 0, 0.7);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
         .submit-btn {
-            padding: 14px 35px;
-            background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink));
+            padding: 12px 30px;
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 0 15px var(--neon-pink);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: rotate(45deg);
-            transition: all 0.5s;
         }
         
         .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 25px var(--neon-pink);
-        }
-        
-        .submit-btn:hover::before {
-            top: 0;
-            left: 0;
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--hard-shadow);
         }
         
         .submit-btn:disabled {
-            background: #444;
+            background: var(--gray);
             cursor: not-allowed;
             transform: none;
-            box-shadow: 0 0 5px #555;
+            box-shadow: none;
         }
         
         .result-container {
             display: none;
             padding: 50px 30px;
             text-align: center;
-            background: rgba(0, 0, 0, 0.8);
+            background: white;
         }
         
         .result-container i {
-            font-size: 80px;
-            color: var(--neon-green);
+            font-size: 60px;
+            color: var(--success);
             margin-bottom: 20px;
-            text-shadow: 0 0 20px var(--neon-green);
         }
         
         .result-container h2 {
-            color: var(--neon-green);
+            color: var(--success);
             margin-bottom: 20px;
-            font-size: 32px;
-            text-shadow: 0 0 10px var(--neon-green);
+            font-size: 28px;
         }
         
         .story-link {
-            background: rgba(20, 20, 20, 0.8);
+            background: #f8f9fa;
             border-radius: 8px;
-            padding: 20px;
-            font-size: 20px;
-            margin: 30px auto;
+            padding: 15px;
+            font-size: 16px;
+            margin: 20px auto;
             word-break: break-all;
-            border: 2px solid var(--neon-green);
-            box-shadow: 0 0 15px var(--neon-green);
+            border: 1px solid #e9ecef;
             max-width: 80%;
             font-family: monospace;
-            color: var(--neon-blue);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .story-link::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
-            animation: linkGlow 3s infinite;
-        }
-        
-        @keyframes linkGlow {
-            0% { left: -100%; }
-            100% { left: 100%; }
+            color: var(--primary);
         }
         
         .back-btn {
-            padding: 12px 30px;
-            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            padding: 10px 25px;
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 20px;
-            box-shadow: 0 0 10px var(--neon-blue);
             font-weight: 600;
         }
         
         .back-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 20px var(--neon-blue);
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--soft-shadow);
         }
         
         .error-message {
-            color: #ff5555;
-            font-size: 14px;
-            margin-top: 8px;
+            color: var(--danger);
+            font-size: 13px;
+            margin-top: 5px;
             display: none;
-            text-shadow: 0 0 5px #ff0000;
         }
         
         @media (max-width: 768px) {
@@ -479,47 +377,11 @@
             
             .preview-section {
                 border-left: none;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                border-top: 1px solid #e9ecef;
             }
             
             header h1 {
                 font-size: 28px;
-            }
-        }
-        
-        /* Floating particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: var(--neon-pink);
-            box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
-            animation: float 15s infinite linear;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
             }
         }
     </style>
@@ -568,7 +430,7 @@
                             <span>Hỗ trợ JPG, PNG (Tối đa 5MB)</span>
                             <input type="file" id="coverFileInput" class="file-input" accept="image/*">
                         </div>
-                        <p style="text-align: center; margin: 15px 0; font-weight: 600; color: var(--light-text);">HOẶC</p>
+                        <p style="text-align: center; margin: 15px 0; font-weight: 600; color: var(--gray);">HOẶC</p>
                         <input type="url" id="coverUrl" placeholder="Dán link URL ảnh bìa tại đây">
                         <div class="error-message" id="coverError">Vui lòng thêm ảnh bìa</div>
                     </div>
