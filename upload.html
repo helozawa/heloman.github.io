@@ -3,78 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Truyện Mới</title>
+    <title>Đăng Truyện với Ảnh Bìa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #e74c3c;
-            --secondary-color: #c0392b;
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
             --light-gray: #f5f5f5;
             --dark-gray: #333;
         }
         
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
+            font-family: Arial, sans-serif;
             background-color: var(--light-gray);
-            color: var(--dark-gray);
-            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
         }
         
         .upload-container {
             max-width: 800px;
-            margin: 30px auto;
-            padding: 30px;
+            margin: 0 auto;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
         
         h1 {
             color: var(--primary-color);
-            margin-bottom: 20px;
             text-align: center;
-            font-size: 28px;
+            margin-bottom: 30px;
         }
         
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: bold;
             color: var(--dark-gray);
         }
         
         input[type="text"],
+        input[type="url"],
         textarea,
         select {
             width: 100%;
-            padding: 12px 15px;
+            padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 6px;
+            border-radius: 4px;
             font-size: 16px;
-            transition: border 0.3s;
-        }
-        
-        input[type="text"]:focus,
-        textarea:focus,
-        select:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
         }
         
         .file-upload-area {
@@ -83,34 +63,13 @@
             text-align: center;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
             margin-bottom: 20px;
-            background-color: #fafafa;
+            transition: all 0.3s;
         }
         
         .file-upload-area:hover {
             border-color: var(--primary-color);
-            background-color: rgba(231, 76, 60, 0.05);
-        }
-        
-        .file-upload-area i {
-            font-size: 48px;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-        
-        .file-upload-area p {
-            margin-bottom: 10px;
-            color: #666;
-        }
-        
-        .file-upload-area span {
-            font-size: 14px;
-            color: #999;
-        }
-        
-        #fileInput {
-            display: none;
+            background-color: rgba(76, 175, 80, 0.05);
         }
         
         #previewContainer {
@@ -122,38 +81,20 @@
         
         .preview-item {
             position: relative;
-            width: 120px;
-            height: 180px;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 150px;
+            height: 200px;
         }
         
         .preview-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .preview-item .remove-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: var(--primary-color);
-            color: white;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .preview-item:hover .remove-btn {
-            opacity: 1;
+        .cover-preview {
+            border: 3px solid var(--primary-color);
         }
         
         .submit-btn {
@@ -165,77 +106,33 @@
             border: none;
             border-radius: 6px;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
             margin-top: 30px;
+            transition: all 0.3s;
         }
         
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
         }
         
-        .submit-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            background-color: #f1f1f1;
-            border-radius: 5px;
-            margin: 20px 0;
-            overflow: hidden;
-            display: none;
-        }
-        
-        .progress {
-            height: 10px;
-            background-color: var(--primary-color);
-            width: 0%;
-            transition: width 0.3s;
-        }
-        
-        .tag-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .tag-item {
-            background-color: #e0e0e0;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .tag-item .remove-tag {
-            margin-left: 8px;
-            cursor: pointer;
-            color: #666;
-        }
-        
-        #tagInput {
-            width: auto;
-            flex-grow: 1;
-            min-width: 150px;
+        .cover-input-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="upload-container">
-        <h1><i class="fas fa-book-open"></i> Đăng Truyện Mới</h1>
+        <h1><i class="fas fa-book"></i> Đăng Truyện Mới</h1>
         
         <form id="uploadForm">
             <div class="form-group">
-                <label for="title">Tiêu đề truyện</label>
-                <input type="text" id="title" placeholder="Nhập tiêu đề truyện" required>
+                <label for="storyTitle">Tên truyện</label>
+                <input type="text" id="storyTitle" placeholder="Nhập tên truyện" required>
             </div>
             
             <div class="form-group">
@@ -244,48 +141,32 @@
             </div>
             
             <div class="form-group">
-                <label for="description">Mô tả truyện</label>
-                <textarea id="description" placeholder="Nhập mô tả ngắn về truyện"></textarea>
+                <label for="description">Mô tả</label>
+                <textarea id="description" rows="4" placeholder="Nhập mô tả truyện"></textarea>
             </div>
             
-            <div class="form-group">
-                <label>Thể loại</label>
-                <select id="category" multiple style="height: auto">
-                    <option value="action">Action</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="drama">Drama</option>
-                    <option value="fantasy">Fantasy</option>
-                    <option value="romance">Romance</option>
-                    <option value="sci-fi">Sci-fi</option>
-                    <option value="supernatural">Supernatural</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label>Tags (thẻ)</label>
-                <div class="tag-container" id="tagContainer">
-                    <input type="text" id="tagInput" placeholder="Nhập tag và ấn Enter">
+            <!-- Ô riêng để gắn link ảnh bìa -->
+            <div class="cover-input-container">
+                <div class="form-group">
+                    <label for="coverImageUrl">Link ảnh bìa (URL)</label>
+                    <input type="url" id="coverImageUrl" placeholder="https://example.com/cover.jpg">
                 </div>
+                <div id="coverPreview" style="text-align: center; margin-top: 15px;"></div>
             </div>
             
+            <!-- Khu vực upload ảnh nội dung -->
             <div class="form-group">
-                <label>Ảnh truyện</label>
+                <label>Ảnh nội dung truyện</label>
                 <div class="file-upload-area" id="dropArea">
-                    <i class="fas fa-cloud-upload-alt"></i>
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: var(--primary-color);"></i>
                     <p>Kéo thả ảnh vào đây hoặc click để chọn</p>
                     <span>Hỗ trợ JPG, PNG (Tối đa 10MB/ảnh)</span>
-                    <input type="file" id="fileInput" accept="image/*" multiple>
+                    <input type="file" id="imageInput" accept="image/*" multiple style="display: none;">
                 </div>
-                
                 <div id="previewContainer"></div>
             </div>
             
-            <div class="progress-bar" id="progressBar">
-                <div class="progress" id="progress"></div>
-            </div>
-            
-            <button type="submit" class="submit-btn" id="submitBtn" disabled>
+            <button type="submit" class="submit-btn">
                 <i class="fas fa-upload"></i> Đăng Truyện
             </button>
         </form>
@@ -294,23 +175,30 @@
     <script>
         // DOM Elements
         const dropArea = document.getElementById('dropArea');
-        const fileInput = document.getElementById('fileInput');
+        const imageInput = document.getElementById('imageInput');
         const previewContainer = document.getElementById('previewContainer');
+        const coverImageUrl = document.getElementById('coverImageUrl');
+        const coverPreview = document.getElementById('coverPreview');
         const uploadForm = document.getElementById('uploadForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const progressBar = document.getElementById('progressBar');
-        const progress = document.getElementById('progress');
-        const tagInput = document.getElementById('tagInput');
-        const tagContainer = document.getElementById('tagContainer');
         
         // Mảng lưu trữ các file ảnh
         let files = [];
-        let tags = [];
+        
+        // Xử lý hiển thị ảnh bìa khi nhập URL
+        coverImageUrl.addEventListener('input', function() {
+            const url = this.value.trim();
+            if (url) {
+                coverPreview.innerHTML = `
+                    <h3>Preview Ảnh Bìa</h3>
+                    <img src="${url}" style="max-width: 200px; max-height: 300px; border: 2px solid var(--primary-color); border-radius: 5px;">
+                `;
+            } else {
+                coverPreview.innerHTML = '';
+            }
+        });
         
         // Xử lý kéo thả file
-        dropArea.addEventListener('click', () => fileInput.click());
-        
-        fileInput.addEventListener('change', handleFiles);
+        dropArea.addEventListener('click', () => imageInput.click());
         
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             dropArea.addEventListener(eventName, preventDefaults, false);
@@ -330,11 +218,13 @@
         });
         
         function highlight() {
-            dropArea.classList.add('highlight');
+            dropArea.style.borderColor = var(--primary-color);
+            dropArea.style.backgroundColor = 'rgba(76, 175, 80, 0.1)';
         }
         
         function unhighlight() {
-            dropArea.classList.remove('highlight');
+            dropArea.style.borderColor = '#ccc';
+            dropArea.style.backgroundColor = '';
         }
         
         dropArea.addEventListener('drop', handleDrop, false);
@@ -342,22 +232,18 @@
         function handleDrop(e) {
             const dt = e.dataTransfer;
             const droppedFiles = dt.files;
-            fileInput.files = droppedFiles;
+            imageInput.files = droppedFiles;
             handleFiles();
         }
         
-        function handleFiles() {
-            files = Array.from(fileInput.files);
-            updatePreview();
-            updateSubmitButton();
-        }
+        // Xử lý khi chọn file
+        imageInput.addEventListener('change', handleFiles);
         
-        function updatePreview() {
+        function handleFiles() {
+            files = Array.from(imageInput.files);
             previewContainer.innerHTML = '';
             
-            if (files.length === 0) {
-                return;
-            }
+            if (files.length === 0) return;
             
             files.forEach((file, index) => {
                 const reader = new FileReader();
@@ -365,149 +251,66 @@
                 reader.onload = function(e) {
                     const previewItem = document.createElement('div');
                     previewItem.className = 'preview-item';
-                    
                     previewItem.innerHTML = `
-                        <img src="${e.target.result}" alt="Preview">
-                        <div class="remove-btn" data-index="${index}">
-                            <i class="fas fa-times"></i>
-                        </div>
+                        <img src="${e.target.result}" alt="Preview ${index + 1}">
                     `;
-                    
                     previewContainer.appendChild(previewItem);
-                    
-                    // Xử lý xóa ảnh
-                    const removeBtn = previewItem.querySelector('.remove-btn');
-                    removeBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        removeImage(index);
-                    });
                 };
                 
                 reader.readAsDataURL(file);
             });
         }
         
-        function removeImage(index) {
-            files.splice(index, 1);
-            
-            // Cập nhật file input
-            const dataTransfer = new DataTransfer();
-            files.forEach(file => dataTransfer.items.add(file));
-            fileInput.files = dataTransfer.files;
-            
-            updatePreview();
-            updateSubmitButton();
-        }
-        
-        // Xử lý tags
-        tagInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && this.value.trim() !== '') {
-                e.preventDefault();
-                const tag = this.value.trim();
-                if (!tags.includes(tag)) {
-                    tags.push(tag);
-                    renderTags();
-                }
-                this.value = '';
-            }
-        });
-        
-        function renderTags() {
-            const tagElements = tags.map((tag, index) => `
-                <div class="tag-item">
-                    ${tag}
-                    <span class="remove-tag" data-index="${index}">
-                        <i class="fas fa-times"></i>
-                    </span>
-                </div>
-            `).join('');
-            
-            tagContainer.innerHTML = tagElements + '<input type="text" id="tagInput" placeholder="Nhập tag và ấn Enter">';
-            
-            // Gán lại sự kiện cho các nút xóa tag
-            document.querySelectorAll('.remove-tag').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    tags.splice(index, 1);
-                    renderTags();
-                });
-            });
-            
-            // Gán lại sự kiện cho input mới
-            document.getElementById('tagInput').addEventListener('keydown', tagInput._events.keydown[0]);
-        }
-        
-        // Cập nhật trạng thái nút submit
-        function updateSubmitButton() {
-            submitBtn.disabled = files.length === 0 || document.getElementById('title').value.trim() === '';
-        }
-        
-        // Theo dõi thay đổi form
-        uploadForm.addEventListener('input', updateSubmitButton);
-        
         // Xử lý submit form
-        uploadForm.addEventListener('submit', function(e) {
+        uploadForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            if (files.length === 0) {
-                alert('Vui lòng chọn ít nhất một ảnh');
+            const storyTitle = document.getElementById('storyTitle').value;
+            const author = document.getElementById('author').value;
+            const description = document.getElementById('description').value;
+            const coverUrl = document.getElementById('coverImageUrl').value;
+            
+            if (!storyTitle) {
+                alert('Vui lòng nhập tên truyện');
+                return;
+            }
+            
+            if (!coverUrl && files.length === 0) {
+                alert('Vui lòng thêm ảnh bìa hoặc ảnh nội dung');
                 return;
             }
             
             const formData = new FormData();
-            formData.append('title', document.getElementById('title').value);
-            formData.append('author', document.getElementById('author').value);
-            formData.append('description', document.getElementById('description').value);
-            
-            // Thêm thể loại
-            const selectedCategories = Array.from(document.getElementById('category').selectedOptions)
-                .map(option => option.value);
-            formData.append('categories', JSON.stringify(selectedCategories));
-            
-            // Thêm tags
-            formData.append('tags', JSON.stringify(tags));
+            formData.append('title', storyTitle);
+            formData.append('author', author);
+            formData.append('description', description);
+            formData.append('coverUrl', coverUrl);
             
             // Thêm các file ảnh
-            files.forEach((file, index) => {
-                formData.append(`images`, file);
+            files.forEach(file => {
+                formData.append('images', file);
             });
             
-            // Hiển thị progress bar
-            progressBar.style.display = 'block';
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang tải lên...';
-            
-            // Gửi dữ liệu lên server (AJAX)
-            const xhr = new XMLHttpRequest();
-            
-            xhr.upload.onprogress = function(e) {
-                if (e.lengthComputable) {
-                    const percent = (e.loaded / e.total) * 100;
-                    progress.style.width = percent + '%';
-                }
-            };
-            
-            xhr.onload = function() {
-                if (xhr.status === 200) {
+            try {
+                // Gửi dữ liệu lên server
+                const response = await fetch('/api/upload-story', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
                     alert('Đăng truyện thành công!');
-                    uploadForm.reset();
-                    files = [];
-                    tags = [];
-                    previewContainer.innerHTML = '';
-                    progressBar.style.display = 'none';
-                    progress.style.width = '0%';
-                    submitBtn.innerHTML = '<i class="fas fa-upload"></i> Đăng Truyện';
-                    updateSubmitButton();
-                    renderTags();
+                    // Chuyển hướng đến trang truyện
+                    window.location.href = `/story/${result.storyId}`;
                 } else {
-                    alert('Có lỗi xảy ra khi đăng truyện');
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-upload"></i> Đăng Truyện';
+                    throw new Error(result.message || 'Đăng tải thất bại');
                 }
-            };
-            
-            xhr.open('POST', '/api/upload-manga', true);
-            xhr.send(formData);
+            } catch (error) {
+                alert('Lỗi: ' + error.message);
+                console.error('Upload error:', error);
+            }
         });
     </script>
 </body>
