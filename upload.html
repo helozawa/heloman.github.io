@@ -6,56 +6,118 @@
     <title>Đăng Truyện Mới</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+       <style>
         :root {
-            --primary-color: #4a69bd;
-            --secondary-color: #1e3799;
-            --accent-color: #e55039;
-            --light-bg: #f8f9fa;
-            --dark-text: #2d3436;
-            --light-text: #636e72;
-            --success-color: #2ecc71;
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-green: #39ff14;
+            --neon-purple: #b026ff;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --light-text: #ffffff;
+            --glow: 0 0 10px, 0 0 20px;
         }
         
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Rajdhani', 'Segoe UI', sans-serif;
         }
         
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+        
         body {
-            background: linear-gradient(135deg, #74b9ff, #a29bfe);
-            color: var(--dark-text);
+            background: radial-gradient(circle at center, #18072c, var(--dark-bg));
+            color: var(--light-text);
             min-height: 100vh;
             padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Neon lines animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--neon-pink), transparent);
+            box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+            animation: scanLine 4s linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes scanLine {
+            0% { top: -10px; }
+            100% { top: 100%; }
         }
         
         .upload-container {
             width: 100%;
             max-width: 900px;
-            background: white;
+            background: rgba(10, 10, 10, 0.8);
             border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+        
+        .upload-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                var(--neon-blue), 
+                var(--neon-pink), 
+                var(--neon-green),
+                var(--neon-purple));
+            z-index: -1;
+            border-radius: 17px;
+            animation: borderGlow 3s linear infinite;
+        }
+        
+        @keyframes borderGlow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
         
         header {
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            color: white;
+            background: rgba(0, 0, 0, 0.7);
             padding: 25px 30px;
             text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
         }
         
         header h1 {
-            font-size: 28px;
+            font-size: 36px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        header p {
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+            font-size: 18px;
         }
         
         .main-content {
@@ -66,14 +128,13 @@
         .form-section {
             flex: 1;
             padding: 30px;
-            background: var(--light-bg);
         }
         
         .preview-section {
             flex: 1;
             padding: 30px;
-            background: white;
-            border-left: 1px solid #eee;
+            background: rgba(15, 15, 15, 0.6);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             flex-direction: column;
         }
@@ -86,8 +147,9 @@
             display: block;
             margin-bottom: 10px;
             font-weight: 600;
-            color: var(--dark-text);
-            font-size: 16px;
+            font-size: 18px;
+            color: var(--neon-green);
+            text-shadow: 0 0 5px var(--neon-green);
         }
         
         .form-group input, 
@@ -95,18 +157,21 @@
         .form-group select {
             width: 100%;
             padding: 14px 18px;
-            border: 2px solid #ddd;
+            background: rgba(20, 20, 20, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             font-size: 16px;
             transition: all 0.3s;
+            color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
         
         .form-group input:focus, 
         .form-group textarea:focus, 
         .form-group select:focus {
-            border-color: var(--primary-color);
+            border-color: var(--neon-purple);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
+            box-shadow: 0 0 10px var(--neon-purple);
         }
         
         .checkbox-group {
@@ -117,8 +182,8 @@
         }
         
         .checkbox-item {
-            background: white;
-            border: 2px solid #ddd;
+            background: rgba(30, 30, 30, 0.7);
+            border: 2px solid var(--neon-blue);
             border-radius: 30px;
             padding: 10px 20px;
             cursor: pointer;
@@ -126,48 +191,57 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            color: #ccc;
+            box-shadow: 0 0 5px var(--neon-blue);
         }
         
         .checkbox-item:hover {
-            border-color: var(--primary-color);
-        }
-        
-        .checkbox-item.selected {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
             color: white;
         }
         
+        .checkbox-item.selected {
+            background: var(--neon-purple);
+            border-color: var(--neon-pink);
+            color: white;
+            box-shadow: 0 0 15px var(--neon-pink);
+        }
+        
         .upload-area {
-            border: 3px dashed #ddd;
+            border: 2px dashed var(--neon-blue);
             border-radius: 10px;
             padding: 40px 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             margin-bottom: 15px;
+            background: rgba(20, 20, 20, 0.5);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
         
         .upload-area:hover {
-            border-color: var(--primary-color);
-            background-color: rgba(74, 105, 189, 0.05);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px var(--neon-pink);
         }
         
         .upload-area i {
             font-size: 50px;
-            color: var(--primary-color);
+            color: var(--neon-blue);
             margin-bottom: 15px;
+            text-shadow: 0 0 10px var(--neon-blue);
         }
         
         .upload-area p {
             font-size: 18px;
             margin-bottom: 10px;
-            color: var(--dark-text);
+            color: var(--light-text);
         }
         
         .upload-area span {
-            color: var(--light-text);
+            color: var(--neon-green);
             font-size: 14px;
+            text-shadow: 0 0 5px var(--neon-green);
         }
         
         .file-input {
@@ -182,17 +256,23 @@
         }
         
         .preview-box {
-            background: var(--light-bg);
+            background: rgba(20, 20, 20, 0.6);
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .preview-box h3 {
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #eee;
-            color: var(--secondary-color);
+            border-bottom: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .cover-preview {
@@ -202,7 +282,8 @@
             border-radius: 8px;
             display: none;
             margin-top: 15px;
-            border: 2px solid var(--primary-color);
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
         }
         
         .content-preview {
@@ -220,8 +301,14 @@
             height: 120px;
             border-radius: 5px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 0 5px var(--neon-blue);
             position: relative;
+            transition: all 0.3s;
+        }
+        
+        .preview-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px var(--neon-pink);
         }
         
         .preview-item img {
@@ -234,7 +321,7 @@
             position: absolute;
             top: 5px;
             right: 5px;
-            background: var(--accent-color);
+            background: rgba(255, 0, 0, 0.7);
             color: white;
             width: 22px;
             height: 22px;
@@ -244,12 +331,13 @@
             justify-content: center;
             cursor: pointer;
             font-size: 12px;
+            box-shadow: 0 0 5px red;
         }
         
         .submit-section {
             padding: 25px 30px;
-            background: white;
-            border-top: 1px solid #eee;
+            background: rgba(0, 0, 0, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -257,7 +345,7 @@
         
         .submit-btn {
             padding: 14px 35px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink));
             color: white;
             border: none;
             border-radius: 8px;
@@ -268,67 +356,120 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            box-shadow: 0 0 15px var(--neon-pink);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            transition: all 0.5s;
         }
         
         .submit-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 7px 15px rgba(74, 105, 189, 0.4);
+            box-shadow: 0 0 25px var(--neon-pink);
+        }
+        
+        .submit-btn:hover::before {
+            top: 0;
+            left: 0;
         }
         
         .submit-btn:disabled {
-            background: #ccc;
+            background: #444;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
+            box-shadow: 0 0 5px #555;
         }
         
         .result-container {
             display: none;
-            padding: 30px;
+            padding: 50px 30px;
             text-align: center;
+            background: rgba(0, 0, 0, 0.8);
         }
         
         .result-container i {
-            font-size: 60px;
-            color: var(--success-color);
+            font-size: 80px;
+            color: var(--neon-green);
             margin-bottom: 20px;
+            text-shadow: 0 0 20px var(--neon-green);
         }
         
         .result-container h2 {
-            color: var(--success-color);
+            color: var(--neon-green);
             margin-bottom: 20px;
+            font-size: 32px;
+            text-shadow: 0 0 10px var(--neon-green);
         }
         
         .story-link {
-            background: var(--light-bg);
+            background: rgba(20, 20, 20, 0.8);
             border-radius: 8px;
-            padding: 15px;
-            font-size: 18px;
-            margin: 25px 0;
+            padding: 20px;
+            font-size: 20px;
+            margin: 30px auto;
             word-break: break-all;
-            border: 2px dashed var(--success-color);
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 15px var(--neon-green);
+            max-width: 80%;
+            font-family: monospace;
+            color: var(--neon-blue);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            animation: linkGlow 3s infinite;
+        }
+        
+        @keyframes linkGlow {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         
         .back-btn {
             padding: 12px 30px;
-            background: var(--primary-color);
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 0 10px var(--neon-blue);
+            font-weight: 600;
         }
         
         .back-btn:hover {
-            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--neon-blue);
         }
         
         .error-message {
-            color: var(--accent-color);
+            color: #ff5555;
             font-size: 14px;
             margin-top: 8px;
             display: none;
+            text-shadow: 0 0 5px #ff0000;
         }
         
         @media (max-width: 768px) {
@@ -338,7 +479,47 @@
             
             .preview-section {
                 border-left: none;
-                border-top: 1px solid #eee;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            header h1 {
+                font-size: 28px;
+            }
+        }
+        
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
             }
         }
     </style>
