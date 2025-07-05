@@ -3,249 +3,566 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Truyện với Ảnh Bìa</title>
+    <title>Đăng Truyện Mới</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4CAF50;
-            --secondary-color: #45a049;
-            --light-gray: #f5f5f5;
-            --dark-gray: #333;
+            --primary-color: #4a69bd;
+            --secondary-color: #1e3799;
+            --accent-color: #e55039;
+            --light-bg: #f8f9fa;
+            --dark-text: #2d3436;
+            --light-text: #636e72;
+            --success-color: #2ecc71;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: Arial, sans-serif;
-            background-color: var(--light-gray);
-            margin: 0;
+            background: linear-gradient(135deg, #74b9ff, #a29bfe);
+            color: var(--dark-text);
+            min-height: 100vh;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .upload-container {
-            max-width: 800px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 900px;
             background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
         }
         
-        h1 {
-            color: var(--primary-color);
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 25px 30px;
             text-align: center;
-            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .main-content {
+            display: flex;
+            min-height: 600px;
+        }
+        
+        .form-section {
+            flex: 1;
+            padding: 30px;
+            background: var(--light-bg);
+        }
+        
+        .preview-section {
+            flex: 1;
+            padding: 30px;
+            background: white;
+            border-left: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
-        label {
+        .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--dark-gray);
-        }
-        
-        input[type="text"],
-        input[type="url"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--dark-text);
             font-size: 16px;
         }
         
-        .file-upload-area {
-            border: 2px dashed #ccc;
-            padding: 30px;
-            text-align: center;
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #ddd;
             border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 20px;
+            font-size: 16px;
             transition: all 0.3s;
         }
         
-        .file-upload-area:hover {
+        .form-group input:focus, 
+        .form-group textarea:focus, 
+        .form-group select:focus {
             border-color: var(--primary-color);
-            background-color: rgba(76, 175, 80, 0.05);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
         }
         
-        #previewContainer {
+        .checkbox-group {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .checkbox-item.selected {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(74, 105, 189, 0.05);
+        }
+        
+        .upload-area i {
+            font-size: 50px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .upload-area p {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+        
+        .upload-area span {
+            color: var(--light-text);
+            font-size: 14px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .preview-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .preview-box {
+            background: var(--light-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .preview-box h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            color: var(--secondary-color);
+        }
+        
+        .cover-preview {
+            width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: none;
+            margin-top: 15px;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .content-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 5px;
         }
         
         .preview-item {
+            width: 80px;
+            height: 120px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: relative;
-            width: 150px;
-            height: 200px;
         }
         
         .preview-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .cover-preview {
-            border: 3px solid var(--primary-color);
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--accent-color);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .submit-section {
+            padding: 25px 30px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 14px 35px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 30px;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(74, 105, 189, 0.4);
         }
         
-        .cover-input-container {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .result-container {
+            display: none;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .result-container i {
+            font-size: 60px;
+            color: var(--success-color);
             margin-bottom: 20px;
+        }
+        
+        .result-container h2 {
+            color: var(--success-color);
+            margin-bottom: 20px;
+        }
+        
+        .story-link {
+            background: var(--light-bg);
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 18px;
+            margin: 25px 0;
+            word-break: break-all;
+            border: 2px dashed var(--success-color);
+        }
+        
+        .back-btn {
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: var(--secondary-color);
+        }
+        
+        .error-message {
+            color: var(--accent-color);
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .preview-section {
+                border-left: none;
+                border-top: 1px solid #eee;
+            }
         }
     </style>
 </head>
 <body>
     <div class="upload-container">
-        <h1><i class="fas fa-book"></i> Đăng Truyện Mới</h1>
+        <header>
+            <h1><i class="fas fa-book"></i> Đăng Truyện Mới</h1>
+            <p>Chia sẻ truyện của bạn với cộng đồng</p>
+        </header>
         
-        <form id="uploadForm">
-            <div class="form-group">
-                <label for="storyTitle">Tên truyện</label>
-                <input type="text" id="storyTitle" placeholder="Nhập tên truyện" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="author">Tác giả</label>
-                <input type="text" id="author" placeholder="Nhập tên tác giả">
-            </div>
-            
-            <div class="form-group">
-                <label for="description">Mô tả</label>
-                <textarea id="description" rows="4" placeholder="Nhập mô tả truyện"></textarea>
-            </div>
-            
-            <!-- Ô riêng để gắn link ảnh bìa -->
-            <div class="cover-input-container">
-                <div class="form-group">
-                    <label for="coverImageUrl">Link ảnh bìa (URL)</label>
-                    <input type="url" id="coverImageUrl" placeholder="https://example.com/cover.jpg">
+        <div id="formContent">
+            <div class="main-content">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="storyName">Tên truyện</label>
+                        <input type="text" id="storyName" placeholder="Nhập tên truyện" required>
+                        <div class="error-message" id="nameError">Vui lòng nhập tên truyện</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="originalName">Tên truyện gốc</label>
+                        <input type="text" id="originalName" placeholder="Nhập tên truyện gốc">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Thể loại truyện (Có thể chọn nhiều thể loại)</label>
+                        <div class="checkbox-group" id="genreContainer">
+                            <div class="checkbox-item" data-value="action">Hành động</div>
+                            <div class="checkbox-item" data-value="romance">Lãng mạn</div>
+                            <div class="checkbox-item" data-value="fantasy">Fantasy</div>
+                            <div class="checkbox-item" data-value="comedy">Hài hước</div>
+                            <div class="checkbox-item" data-value="drama">Drama</div>
+                            <div class="checkbox-item" data-value="adventure">Phiêu lưu</div>
+                            <div class="checkbox-item" data-value="mystery">Bí ẩn</div>
+                            <div class="checkbox-item" data-value="horror">Kinh dị</div>
+                        </div>
+                        <div class="error-message" id="genreError">Vui lòng chọn ít nhất một thể loại</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Ảnh bìa truyện</label>
+                        <div class="upload-area" id="coverUploadArea">
+                            <i class="fas fa-image"></i>
+                            <p>Kéo thả ảnh bìa vào đây hoặc click để chọn</p>
+                            <span>Hỗ trợ JPG, PNG (Tối đa 5MB)</span>
+                            <input type="file" id="coverFileInput" class="file-input" accept="image/*">
+                        </div>
+                        <p style="text-align: center; margin: 15px 0; font-weight: 600; color: var(--light-text);">HOẶC</p>
+                        <input type="url" id="coverUrl" placeholder="Dán link URL ảnh bìa tại đây">
+                        <div class="error-message" id="coverError">Vui lòng thêm ảnh bìa</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Đăng ảnh nội dung</label>
+                        <div class="upload-area" id="contentUploadArea">
+                            <i class="fas fa-images"></i>
+                            <p>Kéo thả ảnh vào đây hoặc click để chọn nhiều ảnh</p>
+                            <span>Hỗ trợ JPG, PNG (Tối đa 10MB/ảnh)</span>
+                            <input type="file" id="contentFileInput" class="file-input" accept="image/*" multiple>
+                        </div>
+                        <div class="error-message" id="contentError">Vui lòng thêm ít nhất một ảnh nội dung</div>
+                    </div>
                 </div>
-                <div id="coverPreview" style="text-align: center; margin-top: 15px;"></div>
-            </div>
-            
-            <!-- Khu vực upload ảnh nội dung -->
-            <div class="form-group">
-                <label>Ảnh nội dung truyện</label>
-                <div class="file-upload-area" id="dropArea">
-                    <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: var(--primary-color);"></i>
-                    <p>Kéo thả ảnh vào đây hoặc click để chọn</p>
-                    <span>Hỗ trợ JPG, PNG (Tối đa 10MB/ảnh)</span>
-                    <input type="file" id="imageInput" accept="image/*" multiple style="display: none;">
+                
+                <div class="preview-section">
+                    <div class="preview-container">
+                        <div class="preview-box">
+                            <h3><i class="fas fa-book-open"></i> Thông tin truyện</h3>
+                            <div><strong>Tên truyện:</strong> <span id="previewName">-</span></div>
+                            <div><strong>Tên gốc:</strong> <span id="previewOriginal">-</span></div>
+                            <div><strong>Thể loại:</strong> <span id="previewGenres">-</span></div>
+                        </div>
+                        
+                        <div class="preview-box">
+                            <h3><i class="fas fa-image"></i> Ảnh bìa</h3>
+                            <img id="coverPreviewImg" class="cover-preview" alt="Preview ảnh bìa">
+                        </div>
+                        
+                        <div class="preview-box">
+                            <h3><i class="fas fa-copy"></i> Ảnh nội dung</h3>
+                            <div class="content-preview" id="contentPreview">
+                                <div class="empty-preview">Chưa có ảnh nội dung nào được chọn</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="previewContainer"></div>
             </div>
             
-            <button type="submit" class="submit-btn">
-                <i class="fas fa-upload"></i> Đăng Truyện
-            </button>
-        </form>
+            <div class="submit-section">
+                <div>
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms">Tôi đồng ý với các điều khoản và chính sách đăng truyện</label>
+                </div>
+                <button type="button" id="submitBtn" class="submit-btn">
+                    <i class="fas fa-upload"></i> Đăng Truyện
+                </button>
+            </div>
+        </div>
+        
+        <div id="resultContainer" class="result-container">
+            <i class="fas fa-check-circle"></i>
+            <h2>Đăng truyện thành công!</h2>
+            <p>Truyện của bạn đã được đăng tải thành công lên hệ thống.</p>
+            
+            <div class="story-link" id="storyLink">
+                https://truyencuaban.com/story/12345
+            </div>
+            
+            <p>Sao chép liên kết trên và chia sẻ với bạn bè!</p>
+            <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Đăng truyện mới</button>
+        </div>
     </div>
 
     <script>
         // DOM Elements
-        const dropArea = document.getElementById('dropArea');
-        const imageInput = document.getElementById('imageInput');
-        const previewContainer = document.getElementById('previewContainer');
-        const coverImageUrl = document.getElementById('coverImageUrl');
-        const coverPreview = document.getElementById('coverPreview');
-        const uploadForm = document.getElementById('uploadForm');
+        const formContent = document.getElementById('formContent');
+        const resultContainer = document.getElementById('resultContainer');
+        const submitBtn = document.getElementById('submitBtn');
+        const backBtn = document.getElementById('backBtn');
+        const storyLink = document.getElementById('storyLink');
+        const coverUploadArea = document.getElementById('coverUploadArea');
+        const coverFileInput = document.getElementById('coverFileInput');
+        const coverUrl = document.getElementById('coverUrl');
+        const coverPreviewImg = document.getElementById('coverPreviewImg');
+        const contentUploadArea = document.getElementById('contentUploadArea');
+        const contentFileInput = document.getElementById('contentFileInput');
+        const contentPreview = document.getElementById('contentPreview');
+        const storyName = document.getElementById('storyName');
+        const originalName = document.getElementById('originalName');
+        const previewName = document.getElementById('previewName');
+        const previewOriginal = document.getElementById('previewOriginal');
+        const previewGenres = document.getElementById('previewGenres');
+        const genreContainer = document.getElementById('genreContainer');
         
-        // Mảng lưu trữ các file ảnh
-        let files = [];
+        // Biến lưu trữ
+        let coverImage = null;
+        let contentImages = [];
+        let selectedGenres = [];
         
-        // Xử lý hiển thị ảnh bìa khi nhập URL
-        coverImageUrl.addEventListener('input', function() {
-            const url = this.value.trim();
-            if (url) {
-                coverPreview.innerHTML = `
-                    <h3>Preview Ảnh Bìa</h3>
-                    <img src="${url}" style="max-width: 200px; max-height: 300px; border: 2px solid var(--primary-color); border-radius: 5px;">
-                `;
-            } else {
-                coverPreview.innerHTML = '';
+        // Khởi tạo sự kiện
+        function initEvents() {
+            // Xử lý chọn thể loại
+            genreContainer.querySelectorAll('.checkbox-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                        selectedGenres = selectedGenres.filter(g => g !== value);
+                    } else {
+                        this.classList.add('selected');
+                        selectedGenres.push(value);
+                    }
+                    updateGenrePreview();
+                });
+            });
+            
+            // Xử lý ảnh bìa - upload
+            coverUploadArea.addEventListener('click', () => coverFileInput.click());
+            coverFileInput.addEventListener('change', handleCoverFile);
+            
+            // Xử lý ảnh bìa - URL
+            coverUrl.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    coverPreviewImg.src = this.value;
+                    coverPreviewImg.style.display = 'block';
+                    coverImage = this.value;
+                } else {
+                    coverPreviewImg.style.display = 'none';
+                    coverImage = null;
+                }
+            });
+            
+            // Xử lý ảnh nội dung
+            contentUploadArea.addEventListener('click', () => contentFileInput.click());
+            contentFileInput.addEventListener('change', handleContentFiles);
+            
+            // Cập nhật preview thông tin
+            storyName.addEventListener('input', function() {
+                previewName.textContent = this.value || '-';
+            });
+            
+            originalName.addEventListener('input', function() {
+                previewOriginal.textContent = this.value || '-';
+            });
+            
+            // Xử lý nút đăng truyện
+            submitBtn.addEventListener('click', uploadStory);
+            
+            // Xử lý nút quay lại
+            backBtn.addEventListener('click', function() {
+                resultContainer.style.display = 'none';
+                formContent.style.display = 'block';
+                resetForm();
+            });
+        }
+        
+        // Xử lý file ảnh bìa
+        function handleCoverFile() {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    coverPreviewImg.src = e.target.result;
+                    coverPreviewImg.style.display = 'block';
+                    coverImage = file;
+                };
+                
+                reader.readAsDataURL(file);
             }
-        });
-        
-        // Xử lý kéo thả file
-        dropArea.addEventListener('click', () => imageInput.click());
-        
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, preventDefaults, false);
-        });
-        
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
         }
         
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, highlight, false);
-        });
-        
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, unhighlight, false);
-        });
-        
-        function highlight() {
-            dropArea.style.borderColor = var(--primary-color);
-            dropArea.style.backgroundColor = 'rgba(76, 175, 80, 0.1)';
-        }
-        
-        function unhighlight() {
-            dropArea.style.borderColor = '#ccc';
-            dropArea.style.backgroundColor = '';
-        }
-        
-        dropArea.addEventListener('drop', handleDrop, false);
-        
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const droppedFiles = dt.files;
-            imageInput.files = droppedFiles;
-            handleFiles();
-        }
-        
-        // Xử lý khi chọn file
-        imageInput.addEventListener('change', handleFiles);
-        
-        function handleFiles() {
-            files = Array.from(imageInput.files);
-            previewContainer.innerHTML = '';
+        // Xử lý file ảnh nội dung
+        function handleContentFiles() {
+            contentImages = Array.from(this.files);
+            contentPreview.innerHTML = '';
             
-            if (files.length === 0) return;
+            if (contentImages.length === 0) {
+                contentPreview.innerHTML = '<div class="empty-preview">Chưa có ảnh nội dung nào được chọn</div>';
+                return;
+            }
             
-            files.forEach((file, index) => {
+            contentImages.forEach((file, index) => {
                 const reader = new FileReader();
                 
                 reader.onload = function(e) {
@@ -253,65 +570,145 @@
                     previewItem.className = 'preview-item';
                     previewItem.innerHTML = `
                         <img src="${e.target.result}" alt="Preview ${index + 1}">
+                        <div class="remove-btn" data-index="${index}">
+                            <i class="fas fa-times"></i>
+                        </div>
                     `;
-                    previewContainer.appendChild(previewItem);
+                    contentPreview.appendChild(previewItem);
+                    
+                    // Xử lý nút xóa ảnh
+                    const removeBtn = previewItem.querySelector('.remove-btn');
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        removeImage(index);
+                    });
                 };
                 
                 reader.readAsDataURL(file);
             });
         }
         
-        // Xử lý submit form
-        uploadForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
+        // Xóa ảnh nội dung
+        function removeImage(index) {
+            contentImages.splice(index, 1);
             
-            const storyTitle = document.getElementById('storyTitle').value;
-            const author = document.getElementById('author').value;
-            const description = document.getElementById('description').value;
-            const coverUrl = document.getElementById('coverImageUrl').value;
+            // Cập nhật file input
+            const dataTransfer = new DataTransfer();
+            contentImages.forEach(file => dataTransfer.items.add(file));
+            contentFileInput.files = dataTransfer.files;
             
-            if (!storyTitle) {
-                alert('Vui lòng nhập tên truyện');
+            handleContentFiles();
+        }
+        
+        // Cập nhật preview thể loại
+        function updateGenrePreview() {
+            const genreNames = {
+                'action': 'Hành động',
+                'romance': 'Lãng mạn',
+                'fantasy': 'Fantasy',
+                'comedy': 'Hài hước',
+                'drama': 'Drama',
+                'adventure': 'Phiêu lưu',
+                'mystery': 'Bí ẩn',
+                'horror': 'Kinh dị'
+            };
+            
+            if (selectedGenres.length === 0) {
+                previewGenres.textContent = '-';
                 return;
             }
             
-            if (!coverUrl && files.length === 0) {
-                alert('Vui lòng thêm ảnh bìa hoặc ảnh nội dung');
-                return;
+            previewGenres.textContent = selectedGenres.map(g => genreNames[g]).join(', ');
+        }
+        
+        // Upload truyện
+        function uploadStory() {
+            // Kiểm tra dữ liệu
+            if (!validateForm()) return;
+            
+            // Tạo URL ngẫu nhiên cho truyện
+            const storyId = Math.random().toString(36).substring(2, 10);
+            const link = `https://truyencuaban.com/story/${storyId}`;
+            
+            // Giả lập quá trình upload
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng tải...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Hiển thị kết quả
+                storyLink.textContent = link;
+                formContent.style.display = 'none';
+                resultContainer.style.display = 'block';
+            }, 2000);
+        }
+        
+        // Kiểm tra form hợp lệ
+        function validateForm() {
+            let isValid = true;
+            
+            // Kiểm tra tên truyện
+            if (storyName.value.trim() === '') {
+                isValid = false;
+                document.getElementById('nameError').style.display = 'block';
+            } else {
+                document.getElementById('nameError').style.display = 'none';
             }
             
-            const formData = new FormData();
-            formData.append('title', storyTitle);
-            formData.append('author', author);
-            formData.append('description', description);
-            formData.append('coverUrl', coverUrl);
+            // Kiểm tra thể loại
+            if (selectedGenres.length === 0) {
+                isValid = false;
+                document.getElementById('genreError').style.display = 'block';
+            } else {
+                document.getElementById('genreError').style.display = 'none';
+            }
             
-            // Thêm các file ảnh
-            files.forEach(file => {
-                formData.append('images', file);
+            // Kiểm tra ảnh bìa
+            if (!coverImage && coverUrl.value.trim() === '') {
+                isValid = false;
+                document.getElementById('coverError').style.display = 'block';
+            } else {
+                document.getElementById('coverError').style.display = 'none';
+            }
+            
+            // Kiểm tra ảnh nội dung
+            if (contentImages.length === 0) {
+                isValid = false;
+                document.getElementById('contentError').style.display = 'block';
+            } else {
+                document.getElementById('contentError').style.display = 'none';
+            }
+            
+            return isValid;
+        }
+        
+        // Reset form
+        function resetForm() {
+            // Reset các trường nhập liệu
+            storyName.value = '';
+            originalName.value = '';
+            coverUrl.value = '';
+            contentFileInput.value = '';
+            
+            // Reset preview
+            previewName.textContent = '-';
+            previewOriginal.textContent = '-';
+            previewGenres.textContent = '-';
+            coverPreviewImg.style.display = 'none';
+            contentPreview.innerHTML = '<div class="empty-preview">Chưa có ảnh nội dung nào được chọn</div>';
+            
+            // Reset thể loại
+            selectedGenres = [];
+            genreContainer.querySelectorAll('.checkbox-item').forEach(item => {
+                item.classList.remove('selected');
             });
             
-            try {
-                // Gửi dữ liệu lên server
-                const response = await fetch('/api/upload-story', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (response.ok) {
-                    alert('Đăng truyện thành công!');
-                    // Chuyển hướng đến trang truyện
-                    window.location.href = `/story/${result.storyId}`;
-                } else {
-                    throw new Error(result.message || 'Đăng tải thất bại');
-                }
-            } catch (error) {
-                alert('Lỗi: ' + error.message);
-                console.error('Upload error:', error);
-            }
-        });
+            // Reset nút submit
+            submitBtn.innerHTML = '<i class="fas fa-upload"></i> Đăng Truyện';
+            submitBtn.disabled = false;
+        }
+        
+        // Khởi chạy khi tải trang
+        window.addEventListener('DOMContentLoaded', initEvents);
     </script>
 </body>
 </html>
