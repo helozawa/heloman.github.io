@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Tải Truyện</title>
+    <style>
+        .upload-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .page-preview {
+            width: 150px;
+            height: 200px;
+            position: relative;
+            border: 1px dashed #ccc;
+        }
+        .page-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .page-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .progress-bar {
+            width: 100%;
+            background: #f3f3f3;
+            margin-top: 10px;
+        }
+        .progress {
+            height: 20px;
+            background: #4CAF50;
+            width: 0%;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <h1>Đăng Tải Truyện Mới</h1>
+        
+        <form id="uploadForm">
+            <div>
+                <label for="title">Tiêu đề:</label>
+                <input type="text" id="title" required>
+            </div>
+            
+            <div>
+                <label for="description">Mô tả:</label>
+                <textarea id="description" rows="4"></textarea>
+            </div>
+            
+            <div>
+                <label for="tags">Tags (phân cách bằng dấu phẩy):</label>
+                <input type="text" id="tags">
+            </div>
+            
+            <div>
+                <label>Tải lên trang truyện:</label>
+                <input type="file" id="pageUpload" multiple accept="image/*">
+                <button type="button" id="addPages">Thêm Trang</button>
+            </div>
+            
+            <div class="preview-container" id="previewContainer">
+                <!-- Các trang sẽ hiển thị ở đây -->
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progressBar">0%</div>
+            </div>
+            
+            <button type="submit">Đăng Truyện</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('addPages').addEventListener('click', function() {
+            const files = document.getElementById('pageUpload').files;
+            const previewContainer = document.getElementById('previewContainer');
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const pageDiv = document.createElement('div');
+                    pageDiv.className = 'page-preview';
+                    pageDiv.dataset.index = previewContainer.children.length;
+                    
+                    pageDiv.innerHTML = `
+                        <img src="${e.target.result}" alt="Page ${previewContainer.children.length + 1}">
+                        <button class="page-remove" data-index="${previewContainer.children.length}">×</button>
+                    `;
+                    
+                    previewContainer.appendChild(pageDiv);
+                    
+                    // Thêm sự kiện xóa trang
+                    pageDiv.querySelector('.page-remove').addEventListener('click', function() {
+                        previewContainer.removeChild(pageDiv);
+                        updatePageNumbers();
+                    });
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            // Reset input file
+            document.getElementById('pageUpload').value = '';
+        });
+        
+        function updatePageNumbers() {
+            const pages = document.querySelectorAll('.page-preview');
+            pages.forEach((page, index) => {
+                page.dataset.index = index;
+                page.querySelector('.page-remove').dataset.index = index;
+                page.querySelector('img').alt = `Page ${index + 1}`;
+            });
+        }
+        
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const tags = document.getElementById('tags').value.split(',').map(tag => tag.trim());
+            const pages = Array.from(document.querySelectorAll('.page-preview img')).map(img => img.src);
+            
+            if (pages.length === 0) {
+                alert('Vui lòng thêm ít nhất một trang truyện');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('tags', JSON.stringify(tags));
+            
+            // Thêm các file ảnh vào FormData
+            const fileInput = document.getElementById('pageUpload');
+            for (let i = 0; i < fileInput.files.length; i++) {
+                formData.append('pages', fileInput.files[i]);
+            }
+            
+            try {
+                const response = await fetch('/api/upload-manga', {
+                    method: 'POST',
+                    body: formData,
+                    // headers sẽ được tự động thiết lập cho FormData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert('Đăng truyện thành công!');
+                    // Reset form
+                    document.getElementById('uploadForm').reset();
+                    document.getElementById('previewContainer').innerHTML = '';
+                } else {
+                    alert('Lỗi: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi đăng truyện');
+            }
+        });
+    </script>
+</body>
+</html>
