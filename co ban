@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tên Trang Web Đọc Truyện</title>
+    <style>
+        /* CSS có thể đặt ở đây hoặc trong file riêng */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        .manga-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .manga-item {
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .manga-item:hover {
+            transform: translateY(-5px);
+        }
+        .manga-cover {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .manga-info {
+            padding: 10px;
+        }
+        .manga-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .manga-meta {
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Tên Trang Web Đọc Truyện</h1>
+            <div class="search-box">
+                <input type="text" placeholder="Tìm kiếm truyện...">
+                <button>Tìm kiếm</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="featured-manga">
+            <h2>Truyện Nổi Bật</h2>
+            <div class="manga-list">
+                <!-- Mẫu 1 item truyện -->
+                <div class="manga-item">
+                    <a href="manga-detail.html?id=1">
+                        <img src="images/manga1.jpg" alt="Tên Truyện 1" class="manga-cover">
+                        <div class="manga-info">
+                            <div class="manga-title">Tên Truyện 1</div>
+                            <div class="manga-meta">Chapter 15 • 10.000 lượt xem</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Thêm các item truyện khác tại đây -->
+                <div class="manga-item">
+                    <a href="manga-detail.html?id=2">
+                        <img src="images/manga2.jpg" alt="Tên Truyện 2" class="manga-cover">
+                        <div class="manga-info">
+                            <div class="manga-title">Tên Truyện 2</div>
+                            <div class="manga-meta">Chapter 20 • 15.000 lượt xem</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="new-manga">
+            <h2>Truyện Mới Cập Nhật</h2>
+            <div class="manga-list">
+                <!-- Thêm các item truyện mới tại đây -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 Tên Trang Web Đọc Truyện. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript có thể thêm ở đây
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Trang đã tải xong');
+            
+            // Ví dụ: Xử lý tìm kiếm
+            const searchButton = document.querySelector('.search-box button');
+            searchButton.addEventListener('click', function() {
+                const searchTerm = document.querySelector('.search-box input').value;
+                alert('Bạn đang tìm kiếm: ' + searchTerm);
+                // Thực tế sẽ chuyển hướng hoặc tải dữ liệu AJAX
+            });
+        });
+    </script>
+</body>
+</html>
