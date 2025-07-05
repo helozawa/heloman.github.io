@@ -1,66 +1,109 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Men work place</title>
+    <title>Trang Truyện</title>
     <style>
-        /* CSS có thể đặt ở đây hoặc trong file riêng */
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        header {
-            background-color: #808080;
-            color: gray;
-            padding: 15px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 0;
-        }
-        .manga-list {
+        .manga-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
+            padding: 20px;
         }
-        .manga-item {
+        .manga-card {
             background: white;
-            border-radius: 5px;
+            border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s;
         }
-        .manga-item:hover {
+        .manga-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .manga-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
         .manga-cover {
             width: 100%;
-            height: 300px;
+            height: 280px;
             object-fit: cover;
         }
         .manga-info {
-            padding: 10px;
+            padding: 15px;
         }
         .manga-title {
+            font-size: 18px;
             font-weight: bold;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+            transition: color 0.2s;
+        }
+        .manga-card:hover .manga-title {
+            color: #e74c3c;
         }
         .manga-meta {
-            font-size: 13px;
-            color: #666;
+            font-size: 14px;
+            color: #7f8c8d;
         }
     </style>
 </head>
+<body>
+    <div class="manga-grid">
+        <!-- Mẫu 1 - Bao toàn bộ card trong thẻ a -->
+        <a href="truyen/one-piece.html" class="manga-link">
+            <div class="manga-card">
+                <img src="one-piece.jpg" alt="One Piece" class="manga-cover">
+                <div class="manga-info">
+                    <h3 class="manga-title">One Piece</h3>
+                    <div class="manga-meta">Chapter 1054 • 1.5M views</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Mẫu 2 - Chỉ tiêu đề có liên kết -->
+        <div class="manga-card">
+            <img src="naruto.jpg" alt="Naruto" class="manga-cover">
+            <div class="manga-info">
+                <a href="truyen/naruto.html" class="manga-title">Naruto</a>
+                <div class="manga-meta">Chapter 700 • 1.2M views</div>
+            </div>
+        </div>
+
+        <!-- Mẫu 3 - Dùng JavaScript -->
+        <div class="manga-card" data-manga-id="attack-on-titan">
+            <img src="aot.jpg" alt="Attack on Titan" class="manga-cover">
+            <div class="manga-info">
+                <h3 class="manga-title clickable-title">Attack on Titan</h3>
+                <div class="manga-meta">Chapter 139 • 980K views</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Xử lý click cho mẫu 3
+        document.querySelectorAll('.clickable-title').forEach(title => {
+            title.style.cursor = 'pointer';
+            title.addEventListener('click', function() {
+                const card = this.closest('.manga-card');
+                const mangaId = card.getAttribute('data-manga-id');
+                window.location.href = `truyen/${mangaId}.html`;
+            });
+        });
+
+        // Thêm hiệu ứng hover cho tiêu đề
+        document.querySelectorAll('.manga-title').forEach(title => {
+            title.addEventListener('mouseenter', function() {
+                this.style.textDecoration = 'underline';
+            });
+            title.addEventListener('mouseleave', function() {
+                this.style.textDecoration = 'none';
+            });
+        });
+    </script>
 <body>
     <header>
         <div class="container">
@@ -87,20 +130,6 @@
                 </div>
                 
                 <!-- Thêm các item truyện khác tại đây -->
-                <div class="manga-item">
-                    <a href="manga-detail.html?id=2">
-                        <img src="D:\nsfw\Imager - __________ - Roku Hentai\[オクタ工房 (オクタ)] 憧れの友ママとマッチングした件 [中国翻訳] [無修正]\01.png" class="manga-cover">
-                        <div class="manga-info">
-                            <div class="manga-title">Tên Truyện 2</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section class="new-manga">
-            <h2>Truyện Mới Cập Nhật</h2>
-            <div class="manga-list">
                 <!-- Thêm các item truyện mới tại đây -->
             </div>
         </section>
@@ -108,7 +137,7 @@
 
     <footer>
         <div class="container">
-            <p>© 2023 Tên Trang Web Đọc Truyện. All rights reserved.</p>
+            <p>ENJOY.</p>
         </div>
     </footer>
 
