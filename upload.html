@@ -488,7 +488,6 @@
             <p>Truyện của bạn đã được đăng tải thành công lên hệ thống.</p>
             
             <div class="story-link" id="storyLink">
-                https://truyencuaban.com/story/12345
             </div>
             
             <p>Sao chép liên kết trên và chia sẻ với bạn bè!</p>
@@ -522,6 +521,84 @@
         let contentImages = [];
         let selectedGenres = [];
         
+        // Hàm tìm kiếm gần đúng (fuzzy search)
+    function searchComics(keyword) {
+    if (!keyword) return [];
+
+    return comics.filter(comic => 
+        comic.title.toLowerCase().includes(keyword.toLowerCase()) ||
+        comic.author.toLowerCase().includes(keyword.toLowerCase()) ||
+        comic.genres.some(genre => genre.toLowerCase().includes(keyword.toLowerCase()))
+    );
+}
+
+// Hiển thị kết quả autocomplete
+    function showAutocompleteResults(results) {
+    const autocompleteResults = document.getElementById("autocompleteResults");
+    autocompleteResults.innerHTML = "";
+
+    if (results.length === 0) {
+        autocompleteResults.style.display = "none";
+        return;
+    }
+
+    results.forEach(result => {
+        const div = document.createElement("div");
+        div.textContent = result.title;
+        div.addEventListener("click", () => {
+            document.getElementById("searchInput").value = result.title;
+            autocompleteResults.style.display = "none";
+            displaySearchResults([result]);
+        });
+        autocompleteResults.appendChild(div);
+    });
+
+    autocompleteResults.style.display = "block";
+}
+
+// Hiển thị kết quả tìm kiếm chính thức
+function displaySearchResults(results) {
+    const searchResults = document.getElementById("searchResults");
+    searchResults.innerHTML = "";
+
+    if (results.length === 0) {
+        searchResults.innerHTML = "<p>Không tìm thấy kết quả nào.</p>";
+        return;
+    }
+
+    results.forEach(comic => {
+        const card = document.createElement("div");
+        card.className = "comic-card";
+        card.innerHTML = `
+            <h3>${comic.title}</h3>
+            <p>Tác giả: ${comic.author}</p>
+            <p>Thể loại: ${comic.genres.join(", ")}</p>
+            <p>Đánh giá: ${comic.rating}/5</p>
+        `;
+        searchResults.appendChild(card);
+    });
+}
+
+// Xử lý sự kiện nhập liệu
+document.getElementById("searchInput").addEventListener("input", (e) => {
+    const keyword = e.target.value.trim();
+    const results = searchComics(keyword);
+    showAutocompleteResults(results);
+});
+
+// Xử lý sự kiện nhấn nút tìm kiếm
+document.getElementById("searchButton").addEventListener("click", () => {
+    const keyword = document.getElementById("searchInput").value.trim();
+    const results = searchComics(keyword);
+    displaySearchResults(results);
+});
+
+// Ẩn autocomplete khi click ra ngoài
+document.addEventListener("click", (e) => {
+    if (e.target.id !== "searchInput") {
+        document.getElementById("autocompleteResults").style.display = "none";
+    }
+});
         // Khởi tạo sự kiện
         function initEvents() {
             // Xử lý chọn thể loại
