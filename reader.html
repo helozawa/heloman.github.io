@@ -521,5 +521,34 @@
         // Khởi chạy khi trang load
         document.addEventListener('DOMContentLoaded', initReader);
     </script>
+    <!DOCTYPE html>
+<html>
+<head>
+    <!-- ... phần head ... -->
+</head>
+<body>
+    <!-- ... nội dung HTML ... -->
+    <h1 id="comic-title">Đang tải...</h1>
+
+    <!-- Đặt script ở cuối body -->
+    <script>
+        // Lấy tham số từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const comicId = urlParams.get('comic');
+
+        if (comicId) {
+            fetch(`data/${comicId}.json`)  // Sửa dấu ' thành ` (template literal)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('comic-title').textContent = data.title;
+                    // Thêm logic hiển thị trang truyện...
+                })
+                .catch(error => console.error("Lỗi tải truyện:", error));
+        } else {
+            document.getElementById('comic-title').textContent = "Không tìm thấy truyện";
+        }
+    </script>
+</body>
+</html>
 </body>
 </html>
