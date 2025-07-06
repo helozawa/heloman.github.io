@@ -71,7 +71,19 @@
                 <div class="manga-info">
                     <h3 class="manga-title">[オクタ工房 (オクタ)] 憧れの友ママとマッチングした件 [中国翻訳] [無修正]</h3>
                        </div>
-                    <a href="reader.html" class="comic-link">Đọc truyện ngay</a>
+                    <div class="comic-item">
+  <!-- Hình ảnh truyện - click để đọc -->
+  <img 
+    src="path/to/comic-cover.jpg" 
+    alt="Tên truyện"
+    onclick="readComic('comic-id')" <!-- Thêm sự kiện click -->
+    style="cursor: pointer;"> <!-- Hiệu ứng con trỏ tay -->
+  
+  <!-- Có thể giữ hoặc ẩn nút đọc truyện cũ -->
+  <button onclick="readComic('comic-id')" style="display:none;">
+    Đọc truyện ngay
+  </button>
+</div>
             </div>
         </a>
 
