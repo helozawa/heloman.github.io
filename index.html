@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serious place for work</title>
+    <title>Serious work place</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -140,40 +140,6 @@
         .user-actions i {
             margin-right: 8px;
             font-size: 18px;
-        }
-        
-        /* Navigation */
-        nav {
-            padding: 15px 0;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        nav ul li a {
-            color: #a0aec0;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-            padding: 8px 15px;
-            border-radius: 20px;
-            transition: all 0.3s;
-            position: relative;
-        }
-        
-        nav ul li a:hover {
-            color: white;
-            background: rgba(74, 108, 247, 0.2);
-        }
-        
-        nav ul li a.active {
-            color: white;
-            background: linear-gradient(45deg, #4a6cf7, #ff6b6b);
         }
         
         /* Main Content */
@@ -493,10 +459,6 @@
                 max-width: 100%;
             }
             
-            nav ul {
-                gap: 10px;
-            }
-            
             .gallery {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
                 gap: 15px;
@@ -515,7 +477,7 @@
             <div class="header-top">
                 <a href="#" class="logo">
                     <i class="fas fa-random"></i>
-                    Động<span>Răm</span>
+                    Động<span> </span>
                 </a>
                 <div class="search-container">
                     <input type="text" placeholder="Tìm kiếm truyện tranh, tác giả, thể loại...">
@@ -526,8 +488,7 @@
                     <a href="#"><i class="fas fa-bookmark"></i> Yêu thích</a>
                 </div>
             </div>
-            <nav>
-            </nav>
+            <!-- Đã loại bỏ phần menu điều hướng -->
         </div>
     </header>
     
@@ -587,17 +548,17 @@
     <script>
         // Dữ liệu truyện tranh
         const comics = [
-            { id: 1, title: "Thám Tử Lừng Danh Conan - Tập 105", tags: ["Trinh thám", "Hài hước"], badge: "Mới", color: "4a6cf7", genre: "mystery" },
-            { id: 2, title: "One Piece - Hải Tặc Vương Tập 102", tags: ["Hành động", "Phiêu lưu"], badge: "Hot", color: "ff6b6b", genre: "action" },
-            { id: 3, title: "Doraemon - Chú Mèo Máy Đến Từ Tương Lai", tags: ["Hài hước", "Gia đình"], badge: "", color: "6a5acd", genre: "comedy" },
-            { id: 4, title: "Thần Đồng Đất Việt - Tập 45",  tags: ["Lịch sử", "Giáo dục"], badge: "Mới", color: "20b2aa", genre: "fantasy" },
-            { id: 5, title: "Đội Trưởng Marvel - Số Đặc Biệt 2024", tags: ["Siêu anh hùng", "Hành động"], badge: "", color: "ffa500", genre: "action" },
-            { id: 6, title: "Slam Dunk - Giấc Mơ Vô Địch", tags: ["Thể thao", "Trường học"], badge: "Full", color: "32cd32", genre: "action" },
-            { id: 7, title: "Thiên Long Bát Bộ - Phiên Bản Truyện Tranh", tags: ["Kiếm hiệp", "Lịch sử"], badge: "", color: "9370db", genre: "fantasy" },
-            { id: 8, title: "Attack on Titan - Tập Cuối", tags: ["Hành động", "Kinh dị"], badge: "Hot", color: "ff4500", genre: "action" },
-            { id: 9, title: "Dragon Ball Super - Tập 87", tags: ["Hành động", "Viễn tưởng"], badge: "Mới", color: "ff0000", genre: "action" },
-            { id: 10, title: "Naruto - Thế Hệ Mới", tags: ["Hành động", "Phiêu lưu"], badge: "", color: "ffd700", genre: "action" },
-            { id: 11, title: "My Hero Academia - Tập 36", tags: ["Siêu anh hùng", "Trường học"], badge: "Hot", color: "00bfff", genre: "action" },
+            { id: 1, title: "Thám Tử Lừng Danh Conan - Tập 105", views: 12400, rating: 4.8, tags: ["Trinh thám", "Hài hước"], badge: "Mới", color: "4a6cf7", genre: "mystery" },
+            { id: 2, title: "One Piece - Hải Tặc Vương Tập 102", views: 28700, rating: 4.9, tags: ["Hành động", "Phiêu lưu"], badge: "Hot", color: "ff6b6b", genre: "action" },
+            { id: 3, title: "Doraemon - Chú Mèo Máy Đến Từ Tương Lai", views: 9300, rating: 4.7, tags: ["Hài hước", "Gia đình"], badge: "", color: "6a5acd", genre: "comedy" },
+            { id: 4, title: "Thần Đồng Đất Việt - Tập 45", views: 7800, rating: 4.6, tags: ["Lịch sử", "Giáo dục"], badge: "Mới", color: "20b2aa", genre: "fantasy" },
+            { id: 5, title: "Đội Trưởng Marvel - Số Đặc Biệt 2024", views: 15200, rating: 4.8, tags: ["Siêu anh hùng", "Hành động"], badge: "", color: "ffa500", genre: "action" },
+            { id: 6, title: "Slam Dunk - Giấc Mơ Vô Địch", views: 18900, rating: 5.0, tags: ["Thể thao", "Trường học"], badge: "Full", color: "32cd32", genre: "action" },
+            { id: 7, title: "Thiên Long Bát Bộ - Phiên Bản Truyện Tranh", views: 11500, rating: 4.7, tags: ["Kiếm hiệp", "Lịch sử"], badge: "", color: "9370db", genre: "fantasy" },
+            { id: 8, title: "Attack on Titan - Tập Cuối", views: 23100, rating: 4.9, tags: ["Hành động", "Kinh dị"], badge: "Hot", color: "ff4500", genre: "action" },
+            { id: 9, title: "Dragon Ball Super - Tập 87", views: 21500, rating: 4.8, tags: ["Hành động", "Viễn tưởng"], badge: "Mới", color: "ff0000", genre: "action" },
+            { id: 10, title: "Naruto - Thế Hệ Mới", views: 19200, rating: 4.7, tags: ["Hành động", "Phiêu lưu"], badge: "", color: "ffd700", genre: "action" },
+            { id: 11, title: "My Hero Academia - Tập 36", views: 17800, rating: 4.9, tags: ["Siêu anh hùng", "Trường học"], badge: "Hot", color: "00bfff", genre: "action" },
             { id: 12, title: "Demon Slayer - Tập 23", views: 22300, rating: 4.9, tags: ["Hành động", "Kinh dị"], badge: "", color: "8a2be2", genre: "action" },
             { id: 13, title: "Tình Yêu Hoàn Hảo", views: 14200, rating: 4.7, tags: ["Lãng mạn", "Trường học"], badge: "Mới", color: "ff69b4", genre: "romance" },
             { id: 14, title: "Điều Kỳ Diệu Của Cuộc Sống", views: 11200, rating: 4.6, tags: ["Đời thường", "Tâm lý"], badge: "", color: "40e0d0", genre: "comedy" },
