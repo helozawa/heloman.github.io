@@ -140,6 +140,29 @@
         .user-actions i {
             margin-right: 8px;
             font-size: 18px;
+        } 
+        
+        .upload-btn {
+            background: linear-gradient(45deg, #4a6cf7, #ff6b6b);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 15px;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .upload-btn i {
+            font-size: 16px;
         }
         
         /* Main Content */
@@ -486,6 +509,9 @@
                 <div class="user-actions">
                     <a href="#"><i class="fas fa-user"></i> Đăng nhập</a>
                     <a href="#"><i class="fas fa-bookmark"></i> Yêu thích</a>
+                    <a href="upload.html" class="upload-btn">
+                        <i class="fas fa-upload"></i> Đăng Truyện
+                    </a>
                 </div>
             </div>
             <!-- Đã loại bỏ phần menu điều hướng -->
