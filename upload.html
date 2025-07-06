@@ -670,8 +670,8 @@
             if (!validateForm()) return;
             
             // Tạo URL ngẫu nhiên cho truyện
-            const storyId = Math.random().toString(36).substring(2, 10);
-            const link = `https://truyencuaban.com/story/${storyId}`;
+             const storySlug = createSlug(storyName.value);
+            const link = `https://helozawa.github.io/heloman.github.io/truyen/${storySlug}`;
             
             // Giả lập quá trình upload
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng tải...';
