@@ -638,6 +638,118 @@
         }
     </style>
 </head>
+    
+    <script>
+const STORAGE_KEY = 'my_comics_data';
+
+// Đọc dữ liệu từ localStorage hoặc khởi tạo rỗng
+let comicsData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+// Hàm lưu vào localStorage
+function saveComics() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(comicsData));
+}
+
+// Hàm hiển thị truyện
+function renderComics() {
+    const comicsContainer = document.getElementById('comics-container');
+    comicsContainer.innerHTML = '';
+    if (comicsData.length === 0) {
+        comicsContainer.innerHTML = `<div style="color:#555;text-align:center;padding:30px 0;">Chưa có truyện nào. Hãy thêm truyện mới!</div>`;
+        return;
+    }
+    comicsData.forEach((comic, idx) => {
+        const div = document.createElement('div');
+        div.className = 'comic-card';
+        div.innerHTML = `
+            <div class="comic-image" style="height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#eee;">
+                <img src="${comic.cover}" alt="Bìa" style="max-width:100%;max-height:100%;" loading="lazy">
+            </div>
+            <div class="comic-content">
+                <div class="comic-title">${comic.title}</div>
+                <div style="margin:10px 0">
+                  <a class="action-btn read-btn" href="${comic.link}" target="_blank">
+                      <i class="fas fa-book-open"></i> Đọc ngay
+                  </a>
+                  <button class="action-btn bookmark-btn" onclick="deleteComic(${idx})" style="background:#e74c3c;color:white;margin-left:10px;">
+                      <i class="fas fa-trash"></i> Xóa
+                  </button>
+                </div>
+            </div>
+        `;
+        comicsContainer.appendChild(div);
+    });
+}
+
+// Xóa truyện
+function deleteComic(idx) {
+    if (confirm('Bạn chắc chắn muốn xóa truyện này?')) {
+        comicsData.splice(idx, 1);
+        saveComics();
+        renderComics();
+    }
+}
+
+// Hiển thị form thêm truyện
+function showAddComicForm() {
+    // Tạo form đơn giản
+    let form = document.createElement('div');
+    form.style = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;';
+    form.innerHTML = `
+        <div style="background:white;padding:30px 30px 20px 30px;border-radius:10px;max-width:90vw;width:350px;">
+            <h3 style="margin-bottom:18px;">Thêm truyện mới</h3>
+            <div style="margin-bottom:10px;">
+                <input id="comic-title" style="width:100%;padding:8px;" placeholder="Tên truyện" />
+            </div>
+            <div style="margin-bottom:10px;">
+                <input id="comic-link" style="width:100%;padding:8px;" placeholder="Liên kết đọc ngay (URL)" />
+            </div>
+            <div style="margin-bottom:16px;">
+                <input id="comic-cover" style="width:100%;padding:8px;" placeholder="Liên kết ảnh bìa (URL)" />
+            </div>
+            <div style="display:flex;gap:10px;">
+                <button id="submitAddComic" style="padding:8px 16px;background:#4CAF50;color:white;border:none;border-radius:5px;">Lưu</button>
+                <button id="cancelAddComic" style="padding:8px 16px;background:#aaa;color:white;border:none;border-radius:5px;">Hủy</button>
+            </div>
+            <div id="form-error" style="color:#e74c3c;margin-top:10px;min-height:20px"></div>
+        </div>
+    `;
+    document.body.appendChild(form);
+
+    // Sự kiện hủy
+    form.querySelector('#cancelAddComic').onclick = () => form.remove();
+    // Sự kiện thêm truyện
+    form.querySelector('#submitAddComic').onclick = () => {
+        let title = form.querySelector('#comic-title').value.trim();
+        let link = form.querySelector('#comic-link').value.trim();
+        let cover = form.querySelector('#comic-cover').value.trim();
+        let error = '';
+
+        if (!title) error = 'Vui lòng nhập tên truyện!';
+        else if (!link) error = 'Vui lòng nhập liên kết đọc truyện!';
+        else if (!/^https?:\/\//.test(link)) error = 'Liên kết đọc chưa đúng định dạng!';
+        else if (!cover) error = 'Vui lòng nhập liên kết ảnh bìa!';
+        else if (!/^https?:\/\//.test(cover)) error = 'Liên kết ảnh bìa chưa đúng định dạng!';
+
+        if (error) {
+            form.querySelector('#form-error').textContent = error;
+            return;
+        }
+
+        comicsData.unshift({title, link, cover});
+        saveComics();
+        renderComics();
+        form.remove();
+    }
+}
+
+// Sự kiện nút thêm truyện
+document.getElementById('add-comic').onclick = showAddComicForm;
+
+// Hiển thị lần đầu
+renderComics();
+</script>
+    
 <body>
     <div class="bubbles">
         <div class="bubble"></div>
