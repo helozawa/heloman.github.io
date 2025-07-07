@@ -1270,5 +1270,30 @@ document.getElementById('add-comic').onclick = showAddComicForm;
 // Hiển thị lần đầu
 renderComics();
 </script>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCq1BQGq3UeVAqjl_vKm1zwI0t_26QGE7w",
+    authDomain: "manga-b4d6a.firebaseapp.com",
+    projectId: "manga-b4d6a",
+    storageBucket: "manga-b4d6a.firebasestorage.app",
+    messagingSenderId: "228431828614",
+    appId: "1:228431828614:web:7a6c9755ff6ad6e1222307",
+    measurementId: "G-EP549LZVBS"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
 </body>
 </html>
