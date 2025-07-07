@@ -676,167 +676,57 @@
     </div>
     
       <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const storiesContainer = document.getElementById('stories-container');
-            const addStoryBtn = document.getElementById('add-story-btn');
-            const searchInput = document.getElementById('search-input');
-            const searchBtn = document.getElementById('search-btn');
-            
-            // Khởi tạo dữ liệu mẫu
-            let stories = [
-                {
-                    id: 1,
-                    title: "Nobody - Tập 1",
-                    coverImage: "https://via.placeholder.com/300x200?text=Ảnh+Bìa+1",
-                    storyLink: "https://example.com/truyen1",
-                    isFavorite: false
-                },
-                {
-                    id: 2,
-                    title: "Nobody - Tập 2",
-                    coverImage: "https://via.placeholder.com/300x200?text=Ảnh+Bìa+2",
-                    storyLink: "https://example.com/truyen2",
-                    isFavorite: true
-                }
-            ];
-            
-            // Hiển thị danh sách truyện
-            function renderStories(storiesToRender = stories) {
-                storiesContainer.innerHTML = '';
-                
-                if (storiesToRender.length === 0) {
-                    storiesContainer.innerHTML = `
-                        <div class="empty-library">
-                            <i class="fas fa-book-open"></i>
-                            <h2>Thư viện truyện trống</h2>
-                            <p>Bạn chưa có truyện nào trong thư viện. Hãy nhấn nút "Thêm truyện" để bắt đầu xây dựng bộ sưu tập của bạn!</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                storiesToRender.forEach(story => {
-                    const storyElement = document.createElement('div');
-                    storyElement.className = 'story-card';
-                    storyElement.innerHTML = `
-                        <div class="story-cover">
-                            <img src="${story.coverImage}" alt="${story.title}">
-                        </div>
-                        <div class="story-info">
-                            <h3 class="story-title">${story.title}</h3>
-                            <div class="story-form">
-                                <div class="form-group">
-                                    <label>Liên kết ảnh bìa:</label>
-                                    <input type="text" value="${story.coverImage}" class="cover-input">
-                                </div>
-                                <div class="form-group">
-                                    <label>Liên kết truyện:</label>
-                                    <input type="text" value="${story.storyLink}" class="link-input">
-                                </div>
-                            </div>
-                            <div class="story-actions">
-                                <button class="btn btn-read" data-id="${story.id}">
-                                    <i class="fas fa-book-open"></i> Đọc ngay
-                                </button>
-                                <button class="btn btn-favorite ${story.isFavorite ? 'active' : ''}" data-id="${story.id}">
-                                    <i class="fas ${story.isFavorite ? 'fa-star' : 'fa-star'}"></i> Yêu thích
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    storiesContainer.appendChild(storyElement);
-                });
-                
-                // Thêm sự kiện cho nút "Đọc ngay"
-                document.querySelectorAll('.btn-read').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const id = this.getAttribute('data-id');
-                        const story = stories.find(s => s.id == id);
-                        if (story) {
-                            window.open(story.storyLink, '_blank');
-                        }
-                    });
-                });
-                
-                // Thêm sự kiện cho nút "Thêm vào yêu thích"
-                document.querySelectorAll('.btn-favorite').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const id = this.getAttribute('data-id');
-                        const story = stories.find(s => s.id == id);
-                        if (story) {
-                            story.isFavorite = !story.isFavorite;
-                            this.classList.toggle('active');
-                            const icon = this.querySelector('i');
-                            icon.className = story.isFavorite ? 'fas fa-star' : 'far fa-star';
-                        }
-                    });
-                });
-                
-                // Cập nhật dữ liệu khi người dùng thay đổi input
-                document.querySelectorAll('.cover-input, .link-input').forEach(input => {
-                    input.addEventListener('change', function() {
-                        const id = this.closest('.story-card').querySelector('.btn-read').getAttribute('data-id');
-                        const story = stories.find(s => s.id == id);
-                        if (story) {
-                            if (this.classList.contains('cover-input')) {
-                                story.coverImage = this.value;
-                            } else {
-                                story.storyLink = this.value;
-                            }
-                        }
-                    });
-                });
-            }
-            
-            // Thêm truyện mới
-            addStoryBtn.addEventListener('click', function() {
-                const newStory = {
-                    id: Date.now(),
-                    title: `Truyện mới ${stories.length + 1}`,
-                    coverImage: "https://via.placeholder.com/300x200?text=Ảnh+Bìa+Mới",
-                    storyLink: "https://example.com/truyen-moi",
-                    isFavorite: false
-                };
-                
-                stories.unshift(newStory);
-                renderStories();
-            });
-            
-            // Tìm kiếm truyện
-            function searchStories() {
-                const term = searchInput.value.toLowerCase();
-                if (!term) {
-                    renderStories();
-                    return;
-                }
-                
-                const filtered = stories.filter(story => 
-                    story.title.toLowerCase().includes(term)
-                );
-                
-                renderStories(filtered);
-                
-                if (filtered.length === 0) {
-                    storiesContainer.innerHTML = `
-                        <div class="no-results">
-                            <h2><i class="fas fa-search"></i> Không tìm thấy truyện phù hợp</h2>
-                            <p>Không có truyện nào khớp với từ khóa "${term}". Vui lòng thử từ khóa khác.</p>
-                        </div>
-                    `;
-                }
-            }
-            
-            searchBtn.addEventListener('click', searchStories);
-            searchInput.addEventListener('keyup', function(e) {
-                if (e.key === 'Enter') {
-                    searchStories();
-                }
-            });
-            
-            // Khởi tạo hiển thị
-            renderStories();
+    // Dữ liệu mẫu
+    let comicsData = [
+        // ... (giữ lại mảng comicsData của bạn)
+    ];
+
+    // Hàm hiển thị truyện
+    function renderComics() {
+        const comicsContainer = document.getElementById('comics-container');
+        comicsContainer.innerHTML = '';
+        comicsData.forEach(comic => {
+            const div = document.createElement('div');
+            div.className = 'comic-card';
+            div.innerHTML = `
+                <div class="comic-image">${comic.title.slice(0,2).toUpperCase()}</div>
+                <div class="comic-content">
+                    <div class="comic-title">${comic.title}</div>
+                    <div class="comic-info">
+                        <span class="comic-price">${comic.price} VND</span>
+                        <span class="comic-rating"><i class="fas fa-star"></i> ${comic.rating}</span>
+                    </div>
+                    <div class="comic-tags">${comic.tags ? comic.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ') : ''}</div>
+                    <div style="margin-top:10px">
+                        <a class="action-btn read-btn" href="${comic.readLink}" target="_blank">
+                            <i class="fas fa-book-open"></i> Đọc ngay
+                        </a>
+                    </div>
+                </div>
+            `;
+            comicsContainer.appendChild(div);
         });
-    </script>
+    }
+
+    // Sự kiện nút Thêm truyện
+    document.getElementById('add-comic').addEventListener('click', function() {
+        const newComic = {
+            title: "Truyện mới " + (comicsData.length + 1),
+            price: "0",
+            rating: "0",
+            tags: [],
+            badge: null,
+            description: "Mô tả truyện mới...",
+            status: "Đang cập nhật",
+            readLink: "#"
+        };
+        comicsData.unshift(newComic);
+        renderComics();
+    });
+
+    // Hiển thị truyện khi load trang
+    renderComics();
+</script>
 </body>
 </html>
 
